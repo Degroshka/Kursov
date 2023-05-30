@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Кursov"
+    "\\Кursov",
+    "\\Кursov\\Debug"
   ],
-  "SelectedNode": "\\Кursov\\Кursov.cpp",
+  "SelectedNode": "\\Кursov\\Кursov.vcxproj",
   "PreviewInSolutionExplorer": false
 }
