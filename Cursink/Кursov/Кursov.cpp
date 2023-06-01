@@ -16,73 +16,58 @@ int provfin(Fdol* f,Fdol *ff, Sdol* s, Sdol* ss) {
         while (s->next != nullptr) {
             cout << f->elem << " and " << s->elem << endl;
             if (f->elem == s->elem) {
-                return 0;
-            }
-            s = s->next;
-            
-        }
+                return 0;}
+            s = s->next;}
         s = ss;
-        f = f->next;
-    }
+        f = f->next;}
     return 1;
 }
-int proverF(Sdol* s, Fdol* ff, Fdol* f, char fch, char sch) {   //// 3 и 4   /// 4 и 
+int proverF(Fdol *pf, Sdol *ps,Sdol* ss, Fdol* ff,  char fch, char sch) {   //// 3 и 4   /// 4 и 
     cout << "ProverF" << endl;
-    while (f->elem != NULL) {
-        cout<< "fch и f" << endl;
-        cout << fch << " и " << f->elem <<endl;
-        if (fch == f->elem) { 
-                    return 1;
+    while (ff->elem != NULL or ss->elem != NULL) {
+        cout << fch << " и " << sch << " И ТАБЛ 1.... " << ff->elem << " " << ss->elem << endl;
+        if (fch == ff->elem or sch==ss->elem ) {
+            ss = ps;
+            while (ss->elem != NULL) {
+                cout << fch << " и " << sch << " И ТАБЛ 1.5.... " << ff->elem << " " << ss->elem << endl;
+                if (sch == ss->elem) {
+                    cout << fch << sch << " Не берем"<<endl;
+                    return 4;
                 }
-                f = f->next;
+                ss = ss->next;
+            }
+            return 1;
         }
-    return 0;
-}
+        else if (fch == ss->elem or sch == ff->elem) {
+            cout << fch << " и " << sch << " И ТАБЛ 2.... " << ff->elem << " " << ss->elem << endl;
+            ss = ps;
+            while (ss->elem != NULL) {
+                cout << fch << " и " << sch << " И ТАБЛ 2.5... " << ff->elem << " " << ss->elem << endl;
+                if (fch == ss->elem and sch == ff->elem) {
+                    return 2;
+                }
+                else if (sch == ss->elem or fch==ss->elem) {
+                    return 3;
+                }
+               
+                ss = ss->next;
+            }
+                return 2;
+            }
+            if (ff->elem != NULL)ff = ff->next;
+            if (ss->elem != NULL)ss = ss->next;
+        }
+        return 0;
+    }
+
+
 
     
     
     
     
-    //do {
-        //cout << f->elem<< " проверка на "<<fch<<endl;
-        //if (fch == f->elem) {
-         ///   return 0;
-       // }
-     //   f = f->next;
-  // }while (f->elem!=NULL);
-    //return 1;
-//
-void prov(Fdol* f, Fdol* ff, Sdol* s, Sdol* ss, Fdol* pf, Sdol* ps) {
-    while (s) {
-        while (pf) {
-            if (s->elem == pf->elem and f->elem == ps->elem) {
-                if (!pf->next) {
-                    ps = nullptr;
-                    pf = nullptr;
-                    return;
-                }
-                else {
-                    pf->prev->next = pf->next;
-                    ps->prev->next = ps->next;
-                    pf->next->prev = pf->prev;
-                    ps->next->prev = ps->prev;
-                    ss = ps->prev;
-                    ff = pf->prev;
-                    delete pf;
-                    delete ps;
-                    ps = ss;
-                    pf = ff;
-                }
-            }
-            ps = ps->next;
-            pf = pf->next;
-        }
-        pf = f;
-        ps = s;
-        s = s->next;
-        f = f->next;
-    }
-}
+
+
 void print(Fdol* f, Sdol* s) {
     
     while (f!=nullptr) {
@@ -95,7 +80,7 @@ void print(Fdol* f, Sdol* s) {
         s = s->next;
     }
     cout << endl;
-
+    
 }
 
 int main() {
@@ -122,26 +107,30 @@ int main() {
             s->next->prev = s;
             f->next->elem = NULL;
             s->next->elem = NULL;
-            if (proverF(s, ff, f, fch, sch) == 1) {
+            if (proverF(pf,ps,ss, ff, fch, sch) == 1) {
                 s->elem = sch;
             }
-            else
+            else if (proverF(pf, ps,ss, ff, fch, sch) == 3) {
+                f->elem = sch;
+                
+            }
+            else if(proverF(pf,ps,ss, ff, fch, sch) == 0)
             {
                 f->elem = fch;
                 s->elem = sch;
             }
+            else if (proverF(pf, ps, ss, ff, fch, sch) == 4) {
+                f->elem = fch;
+            }
         }
-        f = f->next;
-        s = s->next;
-
+        if (f->elem!= NULL)f = f->next;
+        if(s->elem!=NULL)s = s->next;
     }while (true);
     f->next = nullptr;
     s->next = nullptr;
     s = ss;
     f = ff;
     print(f, s);
-    prov(f, ff, s, ss, pf, ps);
-    
     if (provfin(f,ff, s, ss) == 1) {
         cout << "Двудольный";
     }
