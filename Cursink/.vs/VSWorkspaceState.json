@@ -1,9 +1,12 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Debug",
+    "\\x64",
+    "\\x64\\Debug",
     "\\Кursov",
     "\\Кursov\\Debug"
   ],
-  "SelectedNode": "\\Кursov\\Debug\\Кursov.ilk",
+  "SelectedNode": "\\Cursink.sln",
   "PreviewInSolutionExplorer": false
 }
